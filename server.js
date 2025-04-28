@@ -14,27 +14,25 @@ app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
 
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api-inference.huggingface.co/models/gpt2', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.HUGGINGFACE_API_KEY}`
+        'Authorization': `Bearer ${process.env.HUGGINGFACE_API_KEY}`  // Usa la tua chiave API di Hugging Face
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: userMessage }],
-        temperature: 0.7
+        inputs: userMessage,  // Il messaggio dell'utente che invii
       })
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      console.error('Errore OpenAI:', data);
-      return res.status(500).json({ error: "Errore da OpenAI", dettagli: data });
+      console.error('Errore Hugging Face:', data);
+      return res.status(500).json({ error: "Errore da Hugging Face", dettagli: data });
     }
 
-    res.json({ reply: data.choices[0].message.content });
+    res.json({ reply: data[0].generated_text });  // Restituisce la risposta generata dal modello
   } catch (error) {
     console.error('Errore interno server:', error);
     res.status(500).json({ error: "Errore nel server" });
