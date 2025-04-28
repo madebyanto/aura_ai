@@ -2,6 +2,18 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import fetch from 'node-fetch';
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+// Attiva il CORS per tutti
+app.use(cors());
+
+// Continua il tuo codice:
+app.use(express.json());
+
+// ...
+
 
 dotenv.config();
 const app = express();
