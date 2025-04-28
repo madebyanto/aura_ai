@@ -1,4 +1,4 @@
-const SERVER_URL = "https://TUA-APP-RENDER.onrender.com/chat"; // dopo aggiorneremo questo link
+const SERVER_URL = "https://aura-ai-3zi9.onrender.com/chat";
 
 function addMessage(message) {
   const chatBox = document.getElementById("chat-box");
