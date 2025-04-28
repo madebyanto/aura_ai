@@ -28,9 +28,15 @@ app.post('/chat', async (req, res) => {
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Errore OpenAI:', data);
+      return res.status(500).json({ error: "Errore da OpenAI", dettagli: data });
+    }
+
     res.json({ reply: data.choices[0].message.content });
   } catch (error) {
-    console.error(error);
+    console.error('Errore interno server:', error);
     res.status(500).json({ error: "Errore nel server" });
   }
 });
